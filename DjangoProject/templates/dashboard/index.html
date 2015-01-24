@@ -1,0 +1,12 @@
+{%  extends "template.html" %}
+{% block content %}
+    {% load static %}
+    <div class="main" >
+        <h2>Dashboard</h2>
+        <p>
+            <a href="upload.html">{{ message }}</a>
+            {{ anothermessage }} <br />
+            <img src="{% static "media/rango.jpg" %}" alt="Picture of Rango" />
+        </p>
+    </div>
+{% endblock %}
