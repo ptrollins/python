@@ -1,0 +1,17 @@
+{%  extends "template.html" %}
+{% block content %}
+    <div class="upload" >
+        <h2>Scores</h2>
+        <p>
+            {% if scores %}
+                <ul>
+                    {% for score in scores %}
+                    <li>{{ score.student }} on {{ score.exercise }}: {{ score.score }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no scores present.</strong>
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}
