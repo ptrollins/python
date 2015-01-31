@@ -3,11 +3,9 @@ import csv  # for CSV parser
 import sqlite3  # for DB
 from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.shortcuts import render_to_response, RequestContext
-# from django.template.defaulttags import csrf_token
-from django.core.context_processors import csrf
-from io import TextIOWrapper
+from django.core.context_processors import csrf  # For form POST security CSRF token
+from io import TextIOWrapper  #
 
 
 def index(request):
@@ -51,39 +49,24 @@ def upload_file(request):
 
 
 def handle_csv_upload(csvfile):
-    # Create the database connection and cursor
-    connection = sqlite3.connect('dashboard.db')
-    cur = connection.cursor()
-
     reader = csv.reader(csvfile)  # read the CSV file into a list of strings
+    connection = sqlite3.connect('dashboard.db')  # Create the database connection and cursor
+
     for row in reader:  # for each row from the CSV format the data to correct data type and insert into database
         # 0 = id_app, 1 = date, 2 = id_student, 3 = id_school, 4 = id_class,
         # 5 = id_exercise, 6 = score, 7 = scoremax_possible
         formatted_date = format_date(row[1])
         with connection:
-            # NULL values are for Autoincremented ID produced by SQLite
             Exercise.objects.get_or_create(id_app=int(row[0]), id_exercise=int(row[5]),
                                                 scoremax_possible=int(row[7]))
-            #ex.save()
-            print('hi')
-            # cur.execute("INSERT OR IGNORE INTO dashboard_exercise VALUES (NULL , ?, ?, ?)",
-            #            (int(row[0]), int(row[5]), int(row[7])))
-            # Stores primary key to use as foreign key in Score Insert
-            exer_id = Exercise.objects.filter(id_app=int(row[0])).filter(id_exercise=int(row[5])).values(id)
-            # exer_id = cur.execute("SELECT id FROM dashboard_exercise WHERE id_exercise=(?)", (int(row[5])))
-            print("now")
-            Student.objects.get_or_create(id_student=int(row[2]), id_school=int(row[3]), id_class=int(row[4]))
-            #st.save()
-            # cur.execute("INSERT OR IGNORE INTO dashboard_student VALUES (NULL , ?, ?, ?)",
-            #            (int(row[2]), int(row[3]), row[4].upper()))
-            # Stores primary key to use as foreign key in Score Insert
-            stud_id = Student.objects.values(id).filter(id_student=int(row[2]))
-            # stud_id = cur.execute("SELECT id FROM dashboard_student WHERE id_student=(?)", (int(row[2])))
+            # Stores object to use as foreign key in Score Insert
+            exer = Exercise.objects.get(id_app=int(row[0]), id_exercise=int(row[5]))
 
-            print(formatted_date, int(row[6]), stud_id, exer_id)
-            Score.objects.get_or_create(date=formatted_date, score=int(row[6]), student=stud_id, exercise=exer_id)
-            # cur.execute("INSERT OR IGNORE INTO dashboard_score VALUES (NULL , ?, ?, ?, ?)",
-            #            (formatted_date, int(row[6]), stud_id, exer_id))
+            Student.objects.get_or_create(id_student=int(row[2]), id_school=int(row[3]), id_class=row[4])
+            # Stores primary key to use as foreign key in Score Insert
+            stud = Student.objects.get(id_student=int(row[2]))
+
+            Score.objects.get_or_create(date=formatted_date, score=int(row[6]), student=stud, exercise=exer)
 
     # Close the csv file, commit changes, and close the connection
     csvfile.close()
