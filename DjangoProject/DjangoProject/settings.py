@@ -7,7 +7,8 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
-
+# for language support
+from django.utils.translation import ugettext_lazy as _
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -26,6 +27,29 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+
+BOWER_PATH = '/usr/local/bin/bower'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR,  'templates'),
+)
 
 # Application definition
 
@@ -37,7 +61,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
-    # 'django_nvd3',
+    'registration',
+    'djangobower',
+    'django_nvd3',
+)
+
+BOWER_INSTALLED_APPS = (
+    'jquery',
+    'underscore',
+    'nvd3'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,6 +80,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'DjangoProject.urls'
@@ -65,10 +98,21 @@ DATABASES = {
     }
 }
 
+REGISTRATION_OPEN = True            # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 7         # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True      # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/dashboard/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'      # The page users are directed to if they are not logged in,
+                                    # and are trying to access pages requiring authentication
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+# added for multilingual support
+LANGUAGES = (('en', _('English')),
+             ('fr', _('French')),)
 
 TIME_ZONE = 'UTC'
 
@@ -79,15 +123,3 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-)

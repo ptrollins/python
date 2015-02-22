@@ -1,12 +1,14 @@
 {%  extends "template.html" %}
 {% block content %}
+
     {% load static %}
-    <div class="main" >
-        <h2>Dashboard</h2>
-        <p>
-            <a href="upload">{{ message }}</a>
-            {{ anothermessage }} <br />
-            <img src="{% static "media/rango.jpg" %}" alt="Picture of Rango" />
-        </p>
+    <div class="square sqsingle" >
+        <div class='float_left'>
+        <img src="{% static "media/mjangale_students300x400.png" %}" alt="Senegal children using mobile app" />
+        </div>
+        <div class='float_left'>
+            <h4>Welcome to the mJangale Data Dashboard</h4>
+        </div>
     </div>
+
 {% endblock %}

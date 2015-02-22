@@ -5,16 +5,18 @@ from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, RequestContext
 from django.core.context_processors import csrf  # For form POST security CSRF token
+from django.contrib import auth  #for authentication
 from io import TextIOWrapper  #
+from django.shortcuts import render
 
 
 def index(request):
     context = RequestContext(request)
-    context_dict = {'message': 'Upload!', 'anothermessage': 'Testing!'}
+    context_dict = {'message': 'Login'}
     return render_to_response('dashboard/index.html', context_dict, context)
 
 
-def display_data(request):
+def dashboard(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
 
@@ -25,11 +27,46 @@ def display_data(request):
     scores_list = Score.objects.order_by("date")
     context_dict = {"student": students_list, "exercise": exercises_list, "score": scores_list}
 
+    return render_to_response('dashboard/dashboard.html', context_dict, context)
+
+
+def usage(request):
+    context = RequestContext(request)
+    score_list = [s.score for s in Score.objects.all()]
+    context_dict = {"score": score_list}
+    return render_to_response('dashboard/usage.html', context_dict, context)
+
+
+def scores(request):
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+
+    # Query the database for a list of ALL students currently stored.
+    # Place the list in our context_dict dictionary which will be passed to the template engine.
+    scores_list = Score.objects.order_by("exercise__id_exercise")
+    # score_list = [s.score for s in Score.objects.all()]
+    # {'score_list': [student_score.score for student_score in Score.objects.get(student__id=3)]}
+    context_dict = {"score": scores_list}
+
     # Render the response and send it back!
-    return render_to_response('dashboard/display.html', context_dict, context)
+    return render_to_response('dashboard/scores.html', context_dict, context)
+
+
+def classes(request):
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+
+    # Query the database for a list of ALL students currently stored.
+    # Place the list in our context_dict dictionary which will be passed to the template engine.
+    students_list = Student.objects.order_by("id_student")
+    exercises_list = Exercise.objects.order_by("id_app")
+    scores_list = Score.objects.all()
+    context_dict = {"student": students_list, "exercise": exercises_list, "score": scores_list}
+    return render_to_response('dashboard/class.html', context_dict, context)
 
 
 def upload_file(request):
+    context = RequestContext(request)
     args = {}
     args.update(csrf(request))
     #  When button is clicked method is POST so file is uploaded with request.FILES
@@ -45,7 +82,7 @@ def upload_file(request):
     else:
         form = UploadFileForm()
         args['form'] = form
-    return render_to_response('dashboard/upload.html', args)
+    return render_to_response('dashboard/upload.html', args, context)
 
 
 def handle_csv_upload(csvfile):
@@ -103,3 +140,39 @@ def monthToNum(date):  # Def to convert month abbreviation to a number
         'MAI': '05',
         'AOU': '08',
     }[date]
+
+
+# authentication
+def login(request):
+    c = {}
+    c.update(csrf(request))
+    return render_to_response('login', c)
+
+
+def auth_view(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None:
+        auth.login(request, user)
+        HttpResponseRedirect('accounts/loggedin.html')
+    else:
+        HttpResponseRedirect('accounts/invalid.html')
+
+
+def loggedin(request):
+    return render_to_response('loggedin.html',
+        {'full_name': request.user.username})
+
+
+def invalid_login(request):
+    return render_to_response('invalid_login.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return render_to_response('logout.html')
+
+
+

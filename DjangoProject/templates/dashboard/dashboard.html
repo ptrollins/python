@@ -1,11 +1,12 @@
-{%  extends "template.html" %}
+{% extends "template.html" %}
 {% block content %}
-    <div class="upload" >
+    {% if user.is_authenticated %}
+    <div class="square">
         <h2>Students</h2>
         <p>
             {% if student %}
                 <ul>
-                    {% for students in student %}
+                    {% for students in student%}
                         <li>Student: {{ students.id_student }}, Class: {{ students.id_class }}, School: {{ students.id_school }}</li>
                     {% endfor %}
                 </ul>
@@ -13,6 +14,8 @@
                 <strong>There are no students present.</strong>
             {% endif %}
         </p>
+    </div>
+    <div class="square">
         <h2>Exercises</h2>
         <p>
             {% if exercise %}
@@ -26,12 +29,14 @@
                 <strong>There are no exercises present.</strong>
             {% endif %}
         </p>
-    <h2>Scores</h2>
+    </div>
+    <div class="square sqsingle">
+        <h2>Scores</h2>
         <p>
             {% if score %}
                 <ul>
                     {% for scores in score %}
-                        <li>Exercise: {{ scores.id_exercise }}, Student: {{ scores.id_student }},
+                        <li>Exercise: {{ scores.exercise.id_exercise }}, Student: {{ scores.student.id_student }},
                             Date: {{ scores.date }}, Score: {{ scores.score }}</li>
                     {% endfor %}
                 </ul>
@@ -40,4 +45,7 @@
             {% endif %}
         </p>
     </div>
+    {% else %}
+        <a href="admin">Login</a>
+    {% endif %}
 {% endblock %}

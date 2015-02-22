@@ -1,0 +1,136 @@
+{%  extends "template.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="sq-single">
+        <h2>Scores</h2>
+        <p>
+            {% if score %}
+                <ul>
+                    {% for scores in score %}
+                        <li>Exercise: {{ scores.exercise.id_exercise }}, Student: {{ scores.student.id_student }},
+                            Date: {{ scores.date }}, Score: {{ scores.score }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>There are no score present.</strong>
+            {% endif %}
+        </p>
+    </div>
+
+        <div class="square">
+            <h3>Exercise 1</h3>
+            <canvas id="doughnutchart1" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
+            <ol class="doughnut-legend">
+                <li><span style="background-color:#40af49">One Correct</span></li>
+                <li><span style="background-color:#ac558a">Two Correct</span></li>
+                <li><span style="background-color:#f05541">Three Correct</span></li>
+                <li><span style="background-color:#3ac2d0">Four Correct</span></li>
+                <li><span style="background-color:#faaf3c">Five Correct</span></li>
+                <li><span style="background-color:#4287b0">Six Correct</span></li>
+            </ol>
+        </div>
+        <div class="square sqchild">
+            <h3>Exercise 2</h3>
+            <canvas id="doughnutchart2" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
+            <ol class="doughnut-legend">
+                <li><span style="background-color:#40af49">One Correct</span></li>
+                <li><span style="background-color:#ac558a">Two Correct</span></li>
+                <li><span style="background-color:#f05541">Three Correct</span></li>
+                <li><span style="background-color:#3ac2d0">Four Correct</span></li>
+                <li><span style="background-color:#faaf3c">Five Correct</span></li>
+                <li><span style="background-color:#4287b0">Six Correct</span></li>
+            </ol>
+        </div>
+
+        <script>
+        var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+        var barChartData = {
+            labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+            datasets : [
+                {
+                    fillColor : "rgba(220,220,220,0.5)",
+                    strokeColor : "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                },
+                {
+                    fillColor : "rgba(151,187,205,0.5)",
+                    strokeColor : "rgba(151,187,205,0.8)",
+                    highlightFill : "rgba(151,187,205,0.75)",
+                    highlightStroke : "rgba(151,187,205,1)",
+                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                }
+            ]
+        };
+        window.onload = function(){
+            var ctx = document.getElementById("doughnutchart1").getContext("2d");
+            window.myDoughnut = new Chart(ctx).Doughnut(pieData1, {
+                animateRotate : true
+            });
+            var ctx1 = document.getElementById("doughnutchart2").getContext("2d");
+            window.myDoughnut = new Chart(ctx1).Doughnut(pieData2, {
+                animateRotate : true
+            });
+        }
+
+        var pieData1 = [{
+                value: 5,
+                color: "#40af49",
+                label: "One Correct"
+            }, {
+                value: 4,
+                color: "#ac558a",
+                label: "Two Correct"
+            }, {
+                value: 7,
+                color: "#f05541",
+                label: "Three Correct"
+            }, {
+                value: 14,
+                color: "#3ac2d0",
+                label: "Four Correct"
+            }, {
+                value: 33,
+                color: "#faaf3c",
+                label: "Five Correct"
+            }, {
+                value: 16,
+                color: "#4287b0",
+                label: "Six Correct"
+            }];
+
+        var pieData2 = [{
+                value: 3,
+                color: "#40af49",
+                label: "One Correct"
+            }, {
+                value: 5,
+                color: "#ac558a",
+                label: "Two Correct"
+            }, {
+                value: 12,
+                color: "#f05541",
+                label: "Three Correct"
+            }, {
+                value: 16,
+                color: "#3ac2d0",
+                label: "Four Correct"
+            }, {
+                value: 24,
+                color: "#faaf3c",
+                label: "Five Correct"
+            }, {
+                value: 13,
+                color: "#4287b0",
+                label: "Six Correct"
+            }];
+        </script>
+    {% else %}
+        <a href="admin">Login</a>
+    {% endif %}
+{% endblock %}

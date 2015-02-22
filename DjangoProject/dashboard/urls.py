@@ -7,7 +7,11 @@ from django.contrib import admin
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'dashboard.views.index'),
-    # url(r'^index.html', 'dashboard.views.index'),
+    url(r'^index', 'dashboard.views.index'),
+    url(r'^dashboard', 'dashboard.views.dashboard'),
+    url(r'^usage', 'dashboard.views.usage'),
+    url(r'^scores', 'dashboard.views.scores'),
+    url(r'^class', 'dashboard.views.classes'),
     url(r'^upload$', 'dashboard.views.upload_file'),
-    url(r'^display$', 'dashboard.views.display_data'),
+
 )

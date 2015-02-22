@@ -1,0 +1,23 @@
+{
+  "name": "DjangoProject",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ptrollins/python",
+  "authors": [
+    "Preston Rollins <preston.rollins@gmail.com>"
+  ],
+  "description": "Web Dashboard",
+  "keywords": [
+    "dashboard"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.1"
+    },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
