@@ -5,8 +5,7 @@ urlpatterns = patterns('',
     url(r'^dashboard/', include('dashboard.urls')),
     url(r'^$', 'DjangoProject.views.home'),
     # Examples:
-    # url(r'^$', 'DjangoProject.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+
     )
 
 if settings.DEBUG:

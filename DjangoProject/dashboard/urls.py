@@ -13,5 +13,4 @@ urlpatterns = patterns('',
     url(r'^scores', 'dashboard.views.scores'),
     url(r'^class', 'dashboard.views.classes'),
     url(r'^upload$', 'dashboard.views.upload_file'),
-
 )

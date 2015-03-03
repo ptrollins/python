@@ -2,67 +2,46 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 10, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
-html, body {
-  height: 100%;
-}
-
-/* line 12, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
-#main {
-  clear: both;
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin-bottom: -30px;
-}
-
-/* line 20, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
-#footer {
-  clear: both;
-  position: relative;
-  height: 30px;
-}
-
 @media screen and (max-width: 777px) {
-  /* line 17, ../sass/screen.scss */
+  /* line 15, ../sass/screen.scss */
   main {
     width: 100%;
   }
 
-  /* line 18, ../sass/screen.scss */
+  /* line 16, ../sass/screen.scss */
   footer {
     width: 100%;
     margin: auto;
   }
 }
 @media screen and (min-width: 777px) {
-  /* line 25, ../sass/screen.scss */
+  /* line 24, ../sass/screen.scss */
   main {
     width: 90%;
   }
 
-  /* line 26, ../sass/screen.scss */
+  /* line 25, ../sass/screen.scss */
   footer {
     width: 90%;
     margin: auto;
   }
 
-  /* line 30, ../sass/screen.scss */
+  /* line 29, ../sass/screen.scss */
   .square {
     height: 300px;
     width: 44%;
     float: left;
   }
-  /* line 34, ../sass/screen.scss */
+  /* line 33, ../sass/screen.scss */
   .square.sqchild {
     float: right;
   }
-  /* line 35, ../sass/screen.scss */
+  /* line 34, ../sass/screen.scss */
   .square.sqsingle {
     width: 95%;
   }
 }
-/* line 39, ../sass/screen.scss */
+/* line 38, ../sass/screen.scss */
 body {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjY2NjY2NjIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYWFhYWFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
   background-size: 100%;
@@ -75,11 +54,9 @@ body {
   background-color: #EEEEEE;
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 49, ../sass/screen.scss */
+/* line 47, ../sass/screen.scss */
 main {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
@@ -87,28 +64,26 @@ main {
   background-color: white;
   height: 100%;
   margin: auto;
-  overflow: hidden;
-  *zoom: 1;
 }
-/* line 54, ../sass/screen.scss */
+/* line 52, ../sass/screen.scss */
 main a {
   text-decoration: none;
 }
-/* line 58, ../sass/screen.scss */
+/* line 56, ../sass/screen.scss */
 main a:link, main a:visited {
   color: #2CF9F9;
 }
-/* line 61, ../sass/screen.scss */
+/* line 59, ../sass/screen.scss */
 main a:hover, main a:active {
   color: #797979;
 }
 
-/* line 67, ../sass/screen.scss */
+/* line 63, ../sass/screen.scss */
 li {
   padding: 2px;
 }
 
-/* line 70, ../sass/screen.scss */
+/* line 66, ../sass/screen.scss */
 header {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMzAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PHN0b3Agb2Zmc2V0PSI3MCUiIHN0b3AtY29sb3I9IiNkMzA2MDYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
@@ -116,18 +91,16 @@ header {
   background-image: -moz-linear-gradient(left, #ffffff, #ffffff 30%, #d30606 70%);
   background-image: -webkit-linear-gradient(left, #ffffff, #ffffff 30%, #d30606 70%);
   background-image: linear-gradient(to right, #ffffff, #ffffff 30%, #d30606 70%);
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 75, ../sass/screen.scss */
+/* line 70, ../sass/screen.scss */
 .shadowtext {
   text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.6);
   float: right;
   margin: 10px;
 }
 
-/* line 81, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 nav {
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
@@ -137,11 +110,11 @@ nav {
   float: left;
   /* Cross-browser floating helper */
 }
-/* line 85, ../sass/screen.scss */
+/* line 80, ../sass/screen.scss */
 nav .loginLink {
   float: right;
 }
-/* line 88, ../sass/screen.scss */
+/* line 83, ../sass/screen.scss */
 nav a {
   padding: 11px;
   text-decoration: none;
@@ -161,7 +134,7 @@ nav a {
   -webkit-transition: color 0.2s ease-in;
   transition: color 0.2s ease-in;
 }
-/* line 98, ../sass/screen.scss */
+/* line 93, ../sass/screen.scss */
 nav a:hover {
   /* Compass color mixin: shade() */
   color: #2CF9F9;
@@ -171,7 +144,7 @@ nav a:hover {
   border-radius: 7px;
 }
 
-/* line 107, ../sass/screen.scss */
+/* line 102, ../sass/screen.scss */
 .form-group {
   display: inline-block;
   vertical-align: middle;
@@ -180,14 +153,12 @@ nav a:hover {
   *display: inline;
 }
 
-/* line 111, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 .mainContent {
   height: 100%;
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 116, ../sass/screen.scss */
+/* line 110, ../sass/screen.scss */
 .square {
   margin: 5px;
   padding: 15px;
@@ -195,11 +166,9 @@ nav a:hover {
   -moz-box-shadow: #d30606 2px 2px 10px;
   -webkit-box-shadow: #d30606 2px 2px 10px;
   box-shadow: #d30606 2px 2px 10px;
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 124, ../sass/screen.scss */
+/* line 117, ../sass/screen.scss */
 .sq-single {
   margin: 5px;
   padding: 15px;
@@ -207,28 +176,47 @@ nav a:hover {
   -moz-box-shadow: #d30606 2px 2px 10px;
   -webkit-box-shadow: #d30606 2px 2px 10px;
   box-shadow: #d30606 2px 2px 10px;
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 132, ../sass/screen.scss */
+/* line 124, ../sass/screen.scss */
 .float_left {
   padding: 5px;
   height: 100%;
   float: left;
-  overflow: hidden;
-  *zoom: 1;
 }
 
-/* line 139, ../sass/screen.scss */
+/* line 10, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 12, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
+#main {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -30px;
+}
+/* line 18, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
+#main #mainContent {
+  height: 30px;
+}
+
+/* line 20, ../../../.rbenv/versions/2.2.0/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/layout/_sticky-footer.scss */
+#footer {
+  clear: both;
+  position: relative;
+  height: 30px;
+}
+
+/* line 132, ../sass/screen.scss */
 footer {
   clear: both;
   border-radius: 7px;
   background-color: #570202;
-  overflow: hidden;
-  *zoom: 1;
 }
-/* line 143, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 footer a {
   padding: 10px 10px 4px 10px;
   text-decoration: none;
@@ -249,7 +237,7 @@ footer a {
   -webkit-transition: color 0.2s ease-in;
   transition: color 0.2s ease-in;
 }
-/* line 154, ../sass/screen.scss */
+/* line 147, ../sass/screen.scss */
 footer a:hover {
   /* Compass color mixin: shade() */
   color: #2CF9F9;
@@ -258,7 +246,7 @@ footer a:hover {
   -webkit-border-radius: 7px;
   border-radius: 7px;
 }
-/* line 161, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 footer label {
   padding: 10px 10px 10px 10px;
   float: right;

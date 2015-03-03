@@ -1,14 +1,15 @@
 {% extends "template.html" %}
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="sq-single">
+        <div class="square">
             <h2>Students</h2>
             <p>
                 {% if student %}
                     <ul>
                         {% for students in student %}
-                            {% if students.id_class == 'CE1B' %}
-                                <li>Student: {{ students.id_student }}, Class: {{ students.id_class }}, School: {{ students.id_school }}</li>
+                            {% if students.fk_class.id_class == 'CE1B' %}
+                                <li>Student: {{ students.id_student }}, Class: {{ students.fk_class.id_class }},
+                                    School: {{ students.fk_class.fk_school.id_school }}</li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -17,27 +18,7 @@
                 {% endif %}
             </p>
         </div>
-        <div class="sq-single">
-            <h2>Scores</h2>
-            <p>
-                {% if score %}
-                    <ul>
-                        {% for scores in score %}
-                            {% if scores.student.id_class == 'CE1B' %}
-                                <li>Class: {{ scores.student.id_class }}, Exercise: {{ scores.exercise.id_exercise }},
-                                    Student: {{ scores.student.id_student }},
-                                    Date: {{ scores.date }}, Score: {{ scores.score }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <strong>There are no score present.</strong>
-                {% endif %}
-            </p>
-        </div>
-
-
-        <div class="sq-single"  >
+        <div class="square"  >
             <canvas id="canvas" height="450" width="600"></canvas>
         </div>
 
@@ -45,25 +26,23 @@
         <script>
         var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
         var barChartData = {
-            labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+            labels : ["February","March","April","May"],
             datasets : [
                 {
                     fillColor : "rgba(220,220,220,0.5)",
                     strokeColor : "rgba(220,220,220,0.8)",
                     highlightFill: "rgba(220,220,220,0.75)",
                     highlightStroke: "rgba(220,220,220,1)",
-                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
-                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
-                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                     data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                            randomScalingFactor()]
                 },
                 {
                     fillColor : "rgba(151,187,205,0.5)",
                     strokeColor : "rgba(151,187,205,0.8)",
                     highlightFill : "rgba(151,187,205,0.75)",
                     highlightStroke : "rgba(151,187,205,1)",
-                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
-                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
-                        randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                     data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),
+                            randomScalingFactor()]
                 }
             ]
         };

@@ -1,7 +1,7 @@
 {%  extends "template.html" %}
 {% block content %}
     {% if user.is_authenticated %}
-    <div class="sq-single">
+    <div class="square">
         <h2>Scores</h2>
         <p>
             {% if score %}
@@ -18,7 +18,7 @@
     </div>
 
         <div class="square">
-            <h3>Exercise 1</h3>
+            <h3>CalculerAuCE1 Exercise Usage</h3>
             <canvas id="doughnutchart1" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
             <ol class="doughnut-legend">
                 <li><span style="background-color:#40af49">One Correct</span></li>
@@ -29,7 +29,7 @@
                 <li><span style="background-color:#4287b0">Six Correct</span></li>
             </ol>
         </div>
-        <div class="square sqchild">
+        <div class="square">
             <h3>Exercise 2</h3>
             <canvas id="doughnutchart2" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
             <ol class="doughnut-legend">
@@ -78,31 +78,14 @@
             });
         }
 
-        var pieData1 = [{
-                value: 5,
-                color: "#40af49",
-                label: "One Correct"
-            }, {
-                value: 4,
-                color: "#ac558a",
-                label: "Two Correct"
-            }, {
-                value: 7,
-                color: "#f05541",
-                label: "Three Correct"
-            }, {
-                value: 14,
-                color: "#3ac2d0",
-                label: "Four Correct"
-            }, {
-                value: 33,
-                color: "#faaf3c",
-                label: "Five Correct"
-            }, {
-                value: 16,
-                color: "#4287b0",
-                label: "Six Correct"
-            }];
+        var pieData1 = [
+            {%  for id, count, lbcolor in scorecount %}
+            {
+                value: {{ count }},
+                color: "{{ lbcolor }}",
+                label: "Exercise {{ id }} times used"
+            },
+            {% endfor %}];
 
         var pieData2 = [{
                 value: 3,

@@ -1,44 +1,63 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    """AbstractUser provides first_name, last_name, email, password. Use .get_full_name for first and last name"""
+    is_student = models.BooleanField(default=True)
+    is_teacher = models.BooleanField(default=False)
+    # id_student = models.PositiveSmallIntegerField(unique=True, null=True)
+
+
+class App(models.Model):
+    id_app = models.PositiveSmallIntegerField()
+    name_app = models.CharField(max_length=20)
 
 
 class Exercise(models.Model):
     # id primary key
-    id_app = models.PositiveSmallIntegerField()
+    fk_app = models.ForeignKey(App)
     id_exercise = models.PositiveSmallIntegerField()
     scoremax_possible = models.PositiveSmallIntegerField()
 
     class Meta:
-        unique_together = ('id_app', 'id_exercise',)
+        unique_together = ('fk_app', 'id_exercise',)
 
     def __unicode__(self):
-        exer_return = (str(self.id_app) + ' ' + str(self.id_exercise) + ' ' + str(self.scoremax_possible))
+        exer_return = (str(self.id_exercise))
         return exer_return
 
 
-class Student(models.Model):
+class School(models.Model):
     # id primary key
-    id_student = models.PositiveSmallIntegerField(unique=True)
     id_school = models.PositiveSmallIntegerField()
+
+
+class Classroom(models.Model):
+    # id primary key
     id_class = models.CharField(max_length=20)
+    fk_school = models.ForeignKey(School)
+    # users = models.ManyToManyField(User, related_name='classes')
+    # student = models.ManyToManyField(Student, related_name='student')
 
     class Meta:
-        ordering = ["id_student"]
+        unique_together = ('id_class', 'fk_school')
 
-    def __unicode__(self):
-        std_return = (str(self.id_student) + ' ' + str(self.id_school) + ' ' + self.id_class)
-        return std_return
+
+class Student(models.Model):
+    id_student = models.PositiveSmallIntegerField()
+    fk_class = models.ForeignKey(Classroom)
 
 
 class Score(models.Model):
     # id primary key
-    exercise = models.ForeignKey(Exercise)
-    student = models.ForeignKey(Student)
+    fk_exercise = models.ForeignKey(Exercise)
+    fk_student = models.ForeignKey(Student)
     date = models.DateTimeField()
     score = models.PositiveSmallIntegerField()
 
     class Meta:
-        unique_together = ('student', 'date', 'exercise')
+        unique_together = ('fk_student', 'date', 'fk_exercise')
 
     def __unicode__(self):
         score_return = (str(self.student) + ' - ' + str(self.date) + ' - ' + str(self.exercise))
