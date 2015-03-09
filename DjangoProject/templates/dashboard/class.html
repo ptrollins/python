@@ -1,6 +1,14 @@
 {% extends "template.html" %}
+{% load i18n %}
 {% block content %}
     {% if user.is_authenticated %}
+        <div class="container">
+            <h3>Select:</h3>
+            <form action='classes' method='post' enctype="multipart/form-data" class="form-inline"> {% csrf_token %}
+            {{ form }}
+            <input type="submit" value={% trans "Display Scores" %}>
+            </form>
+        </div>
         <div class="square">
             <h2>Students</h2>
             <p>

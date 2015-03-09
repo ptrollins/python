@@ -7,7 +7,7 @@
             {% if score %}
                 <ul>
                     {% for scores in score %}
-                        <li>Exercise: {{ scores.exercise.id_exercise }}, Student: {{ scores.student.id_student }},
+                        <li>Exercise: {{ scores.fk_exercise.id_exercise }}, Student: {{ scores.fk_student.id_student }},
                             Date: {{ scores.date }}, Score: {{ scores.score }}</li>
                     {% endfor %}
                 </ul>
@@ -20,26 +20,20 @@
         <div class="square">
             <h3>CalculerAuCE1 Exercise Usage</h3>
             <canvas id="doughnutchart1" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
-            <ol class="doughnut-legend">
-                <li><span style="background-color:#40af49">One Correct</span></li>
-                <li><span style="background-color:#ac558a">Two Correct</span></li>
-                <li><span style="background-color:#f05541">Three Correct</span></li>
-                <li><span style="background-color:#3ac2d0">Four Correct</span></li>
-                <li><span style="background-color:#faaf3c">Five Correct</span></li>
-                <li><span style="background-color:#4287b0">Six Correct</span></li>
-            </ol>
+            <ul class="doughnut-legend">
+                {%  for id, count, lbcolor in c_scorecount %}
+                    <li><span style="background-color:{{ lbcolor }}">Exercise {{ id }} used <b>{{ count }}</b> times</span></li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="square">
-            <h3>Exercise 2</h3>
+            <h3>LireAuCE1 Exercise Usage</h3>
             <canvas id="doughnutchart2" width="250" height="250" style="width: 250px; height: 250px;"></canvas>
-            <ol class="doughnut-legend">
-                <li><span style="background-color:#40af49">One Correct</span></li>
-                <li><span style="background-color:#ac558a">Two Correct</span></li>
-                <li><span style="background-color:#f05541">Three Correct</span></li>
-                <li><span style="background-color:#3ac2d0">Four Correct</span></li>
-                <li><span style="background-color:#faaf3c">Five Correct</span></li>
-                <li><span style="background-color:#4287b0">Six Correct</span></li>
-            </ol>
+            <ul class="doughnut-legend">
+                {%  for id, count, lbcolor in l_scorecount %}
+                    <li><span style="background-color:{{ lbcolor }}">Exercise {{ id }} used <b>{{ count }}</b> times</span></li>
+                {% endfor %}
+            </ul>
         </div>
 
         <script>
@@ -79,7 +73,7 @@
         }
 
         var pieData1 = [
-            {%  for id, count, lbcolor in scorecount %}
+            {%  for id, count, lbcolor in c_scorecount %}
             {
                 value: {{ count }},
                 color: "{{ lbcolor }}",
@@ -87,31 +81,15 @@
             },
             {% endfor %}];
 
-        var pieData2 = [{
-                value: 3,
-                color: "#40af49",
-                label: "One Correct"
-            }, {
-                value: 5,
-                color: "#ac558a",
-                label: "Two Correct"
-            }, {
-                value: 12,
-                color: "#f05541",
-                label: "Three Correct"
-            }, {
-                value: 16,
-                color: "#3ac2d0",
-                label: "Four Correct"
-            }, {
-                value: 24,
-                color: "#faaf3c",
-                label: "Five Correct"
-            }, {
-                value: 13,
-                color: "#4287b0",
-                label: "Six Correct"
-            }];
+        var pieData2 = [
+            {%  for id, count, lbcolor in l_scorecount %}
+            {
+                value: {{ count }},
+                color: "{{ lbcolor }}",
+                label: "Exercise {{ id }} times used"
+            },
+            {% endfor %}];
+
         </script>
     {% else %}
         <a href="admin">Login</a>

@@ -6,8 +6,8 @@
             <p>
                 {% if scores_per_class %}
                     <ul>
-                        {% for s_count in scores_per_class%}
-                            <li>Count: {{ s_count.entry_count }}</li>
+                        {% for x, y in scores_per_class%}
+                            <li>{{  x }} Count: {{ y }}</li>
                         {% endfor %}
                     </ul>
                 {% else %}

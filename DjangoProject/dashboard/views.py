@@ -1,13 +1,14 @@
 from dashboard.models import Score, Exercise, App, User, School, Classroom, Student  # to use models
 import csv  # for CSV parser
 import sqlite3  # for DB
-from .forms import UploadFileForm
+from .forms import UploadFileForm, ChooseClassForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, RequestContext
 from django.core.context_processors import csrf  # For form POST security CSRF token
 from django.contrib import auth  #for authentication
 from io import TextIOWrapper  #
 from django.contrib.admin.views.decorators import staff_member_required
+# ptrollins@hotmail.com:Mjangale2015!
 
 
 def index(request):
@@ -24,9 +25,10 @@ def dashboard(request):
     class_list = Classroom.objects.values("id_class")
     scores_per_class = []
     for c in class_list:
-        count = Score.objects.filter(fk_student__fk_class=c).count()
+        id = c['id_class']
+        count = Score.objects.filter(fk_student__fk_class__id_class=id).count()
         # Score.objects.filter(Class=c).count()
-        scores_per_class.append((c, count))
+        scores_per_class.append((id, count))
 
     # Query the database for a list of ALL students currently stored.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
@@ -57,18 +59,26 @@ def scores(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
 
-    exercise_count_list = []
-    exercises_list = Exercise.objects.filter(fk_app__id_app=1).order_by("id_exercise")
+    calc_count_list = []
+    lire_count_list = []
     colordict = {'1': '#40af49', '2': '#ac558a', '3': '#f05541', '4': '#3ac2d0', '5': '#faaf3c', '6': '#4287b0'}
-    for x in exercises_list:
-        sc = Score.objects.filter(fk_exercise__id_exercise=x.id_exercise).count()
-        exercise_count_list.append((x.id_exercise, sc, colordict[str(x.id_exercise)]))
+    # for a in id_app_list   # make list of lists to make number of charts dynamic
+    calc_list = Exercise.objects.filter(fk_app__id_app=1).order_by("id_exercise")
+    for cl in calc_list:
+        sc = Score.objects.filter(fk_exercise__id_exercise=cl.id_exercise).count()
+        calc_count_list.append((cl.id_exercise, sc, colordict[str(cl.id_exercise)]))
+
+    lire_list = Exercise.objects.filter(fk_app__id_app=2).order_by("id_exercise")
+    for ll in lire_list:
+        sc = Score.objects.filter(fk_exercise__id_exercise=ll.id_exercise).count()
+        lire_count_list.append((ll.id_exercise, sc, colordict[str(ll.id_exercise)]))
+
     # Query the database for a list of ALL students currently stored.
     # Place the list in our context_dict dictionary which will be passed to the template engine.
     scores_list = Score.objects.order_by("fk_exercise__id_exercise")
     # score_list = [s.score for s in Score.objects.all()]
     # {'score_list': [student_score.score for student_score in Score.objects.get(student__id=3)]}
-    context_dict = {"score": scores_list, "scorecount": exercise_count_list}
+    context_dict = {"score": scores_list, "c_scorecount": calc_count_list, "l_scorecount": lire_count_list}
 
     # Render the response and send it back!
     return render_to_response('dashboard/scores.html', context_dict, context)
@@ -79,13 +89,29 @@ def classes(request):
     # Obtain the context from the HTTP request.
     context = RequestContext(request)
 
-    # Query the database for a list of ALL students currently stored.
-    # Place the list in our context_dict dictionary which will be passed to the template engine.
-    students_list = Student.objects.order_by("id_student")
-    # exercises_list = Exercise.objects.order_by("id_app")
-    scores_list = Score.objects.all()
-    context_dict = {"student": students_list, "score": scores_list}
-    return render_to_response('dashboard/class.html', context_dict, context)
+    args = {}
+    args.update(csrf(request))
+    #  When button is clicked method is POST so file is uploaded with request.FILES
+    if request.method == 'POST':
+        form = ChooseClassForm(request.POST)
+        args['form'] = form
+
+        cid = request.POST.get('class_id')
+        # Query the database for a list of ALL students currently stored.
+        # Place the list in our context_dict dictionary which will be passed to the template engine.
+        students_list = Student.objects.order_by("id_student")
+        class_list = Classroom.objects.values("id_class")
+
+        args.update({"student": students_list, "class_list": class_list})
+
+        if form.is_valid():
+
+            return HttpResponseRedirect('classes')
+    # First time on the page method is GET so form is rendered on class.html
+    else:
+        form = ChooseClassForm
+        args['form'] = form
+    return render_to_response('dashboard/class.html', args, context)
 
 
 def upload_file(request):
@@ -98,7 +124,7 @@ def upload_file(request):
         args['form'] = form
         if form.is_valid():
             # File is formatted Byte so is wrapped as utf-8 and passed to handler
-            handle_csv_upload(TextIOWrapper(request.FILES['file'].file, encoding='utf-8'))
+            handle_csv_upload(TextIOWrapper(request.FILES['file'].file, encoding='macroman'))
             # After handler inserts into database, redirect calls page to display data
             return HttpResponseRedirect('scores')
     # First time on the page method is GET so form is rendered on upload.html
@@ -165,10 +191,10 @@ def monthToNum(date):  # Def to convert month abbreviation to a number
         'OCT': '10',
         'NOV': '11',
         'DEC': '12',
-        'FEV': '02',  # For French
+        'FÉV': '02',  # For French
         'AVR': '04',
         'MAI': '05',
-        'AOU': '08',
+        'AOÛ': '08',
     }[date]
 
 
